@@ -35,7 +35,7 @@ class Main extends Component {
         upcomingEventFirst: null,
         upcomingEventSecond: null,
         shoppingCartData: [],
-        shoppingCartTickets:[]
+        shoppingCartTickets: []
     };
 
     componentDidMount() {
@@ -71,7 +71,7 @@ class Main extends Component {
         this.setState({shoppingCartData: event})
     };
 
-    //добавление билета в массив для отрисовки
+//добавление билета в массив для отрисовки
     addTicketsInCart = (row, place, price, id) => {
         let newTickets = {row: row, place: place, id: id, price: price};
         if (this.state.shoppingCartTickets.length === 0) {
@@ -122,12 +122,27 @@ class Main extends Component {
                 <UpcomingEvents item={item}/>
             )
         };
+
         let urlForFistLink = () => {
             return loadingUpdateComponent && this.state.upcomingEventFirst.eventId == null ? null : this.state.upcomingEventFirst.eventId
         };
+
         let urlForSecondLink = () => {
-            return loadingUpdateComponent ? null : this.state.upcomingEventSecond.eventId
+
+            return loadingUpdateComponent && (this.state.upcomingEventSecond == null) ? null : this.state.upcomingEventSecond.eventId
         };
+
+        let linkSecondUrl = () => {
+            if (this.state.upcomingEventSecond === undefined || loadingUpdateComponent || this.state.upcomingEventSecond == null) {
+                return null;
+            }
+            return (
+                <Link
+                    to={`/events/${urlForSecondLink()}`}> {upcomingElement(this.state.upcomingEventSecond)}</Link>
+            )
+        };
+
+
         return (
             <MainContext.Provider value={
                 {
@@ -154,8 +169,10 @@ class Main extends Component {
                                     <div className="main__list">
                                         <Link
                                             to={`/events/${urlForFistLink()}`}> {upcomingElement(this.state.upcomingEventFirst)}</Link>
-                                        <Link
-                                            to={`/events/${urlForSecondLink()}`}> {upcomingElement(this.state.upcomingEventSecond)}</Link>
+
+                                        {linkSecondUrl()}
+                                        {/*<Link*/}
+                                        {/*    to={`/events/${urlForSecondLink()}`}> {upcomingElement(this.state.upcomingEventSecond)}</Link>*/}
                                     </div>
                                 }
                             </div>
@@ -182,7 +199,8 @@ class Main extends Component {
                                                     <Route path={'/events/:id/'}
                                                            render={({match}) => {
                                                                const {id} = match.params;
-                                                               return <EventDescription path={'/events/'} itemId={id} deleteAllTickets={this.deleteAllTicketsFromArray}/>
+                                                               return <EventDescription path={'/events/'} itemId={id}
+                                                                                        deleteAllTickets={this.deleteAllTicketsFromArray}/>
                                                            }}/>
                                                     <Route path={'/events/'} component={EventResult} exact/>
                                                     <Route path={'/halls-schemes/'} component={HallsSchemes}/>
@@ -214,19 +232,19 @@ class Main extends Component {
                             <div className="footer__address">
                                 <p>Berlin City Hall</p>
                                 <p>Freudstasse 69, 10117 Berlin</p>
-                                <p>Tel.:  <a href="tel:+0302223344">030 2223344</a></p>
+                                <p>Tel.: <a href="tel:+0302223344">030 2223344</a></p>
                             </div>
                         </div>
                         <div className="footer__contacts">
                             <p>Fax.: <a href="tel:+0302223355">030 2223355</a></p>
                             <p>Email: <a href="mailto:info@bch.de">info@bch.de</a></p>
                             <div className="header__icon">
-                                <a href="/"><FontAwesomeIcon icon={ faYoutube } size="lg"/></a>
-                                <a href="/"><FontAwesomeIcon icon={ faFacebookSquare } size="lg"/></a>
-                                <a href="/"><FontAwesomeIcon icon={ faTwitter } size="lg"/></a>
-                                <a href="/"><FontAwesomeIcon icon={ faInstagram } size="lg"/></a>
-                                <a href="/"><FontAwesomeIcon icon={ faOdnoklassniki } size="lg"/></a>
-                                <a href="/"><FontAwesomeIcon icon={ faRss } size="lg"/></a>
+                                <a href="/"><FontAwesomeIcon icon={faYoutube} size="lg"/></a>
+                                <a href="/"><FontAwesomeIcon icon={faFacebookSquare} size="lg"/></a>
+                                <a href="/"><FontAwesomeIcon icon={faTwitter} size="lg"/></a>
+                                <a href="/"><FontAwesomeIcon icon={faInstagram} size="lg"/></a>
+                                <a href="/"><FontAwesomeIcon icon={faOdnoklassniki} size="lg"/></a>
+                                <a href="/"><FontAwesomeIcon icon={faRss} size="lg"/></a>
                             </div>
                         </div>
                     </div>
