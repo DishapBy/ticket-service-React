@@ -10,3 +10,5 @@ Application that allows people to book tickets to events, select seats in 2 conc
 - Webpack, Gulp
 - Pug, SCSS, BEM
 - react-router-dom, react-transition-group, react-day-picker, react-pdf, Formik/Yup
+
+https://tickets-service.firebaseapp.com/
